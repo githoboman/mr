@@ -1,101 +1,464 @@
-import Image from "next/image";
+"use client"
+import React, { useRef, useState, useEffect } from 'react';
+import { Link as ScrollLink, Element } from 'react-scroll';
+import { 
+  Code2, 
+  Layout, 
+  BarChart, 
+  GitBranch,
+  Server,
+  Cpu,
+  Network,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Menu
+} from 'lucide-react';
+import { Button } from "@/components/ui/button"
 
-export default function Home() {
+const services = [
+  {
+    title: "Data Analysis & Analytics",
+    description: "Advanced data processing, visualization, and predictive analytics solutions using cutting-edge technologies",
+    icon: <BarChart className="w-8 h-8 mb-4" />,
+    technologies: ["Python", "R", "TensorFlow", "PowerBI"]
+  },
+  {
+    title: "UI/UX Design",
+    description: "User-centered design solutions with focus on accessibility, usability, and modern aesthetics",
+    icon: <Layout className="w-8 h-8 mb-4" />,
+    technologies: ["Figma", "Adobe XD", "Sketch", "Prototyping"]
+  },
+
+  
+  {
+    title: "Frontend Development",
+    description: "Responsive and performant web applications using modern frameworks and best practices",
+    icon: <Code2 className="w-8 h-8 mb-4" />,
+    technologies: ["React", "Vue", "TypeScript", "Next.js"]
+  },
+  {
+    title: "Backend Development",
+    description: "Scalable server solutions and robust API development for enterprise applications",
+    icon: <Server className="w-8 h-8 mb-4" />,
+    technologies: ["Node.js", "Python", "Java", "AWS"]
+  }
+];
+
+const teamMembers = [
+  {
+    name: "Sarah Johnson",
+    role: "Lead Data Scientist",
+    expertise: "Machine Learning, Statistical Analysis",
+    image: "/placeholder.svg?height=400&width=400"
+  },
+  {
+    name: "Michael Chen",
+    role: "Senior UI/UX Designer",
+    expertise: "User Research, Interface Design",
+    image: "/placeholder.svg?height=400&width=400"
+  },
+  {
+    name: "Alex Rodriguez",
+    role: "Backend Architect",
+    expertise: "System Design, Cloud Infrastructure",
+    image: "/placeholder.svg?height=400&width=400"
+  },
+  {
+    name: "Emma Wilson",
+    role: "Frontend Lead",
+    expertise: "React, Performance Optimization",
+    image: "/placeholder.svg?height=400&width=400"
+  }
+];
+
+const portfolioItems = [
+  {
+    title: "AI-Powered Analytics Dashboard",
+    description: "Developed a real-time analytics dashboard using machine learning algorithms for predictive insights.",
+    image: "/placeholder.svg?height=600&width=800",
+    technologies: ["React", "Python", "TensorFlow", "AWS"]
+  },
+  {
+    title: "E-commerce Platform Redesign",
+    description: "Completely overhauled the UX/UI of a major e-commerce platform, resulting in a 40% increase in conversions.",
+    image: "/placeholder.svg?height=600&width=800",
+    technologies: ["Figma", "React", "Node.js", "MongoDB"]
+  },
+  {
+    title: "Blockchain-based Supply Chain Solution",
+    description: "Implemented a transparent and secure supply chain management system using blockchain technology.",
+    image: "/placeholder.svg?height=600&width=800",
+    technologies: ["Ethereum", "Solidity", "React", "Node.js"]
+  },
+  {
+    title: "IoT Smart Home Ecosystem",
+    description: "Created an interconnected IoT ecosystem for smart home devices with a user-friendly mobile app interface.",
+    image: "/placeholder.svg?height=600&width=800",
+    technologies: ["React Native", "Python", "MQTT", "TensorFlow Lite"]
+  }
+];
+
+const carouselImages = [
+  "/placeholder.svg?height=600&width=800&text=Tech+Innovation",
+  "/placeholder.svg?height=600&width=800&text=Data+Analytics",
+  "/placeholder.svg?height=600&width=800&text=AI+Solutions",
+  "/placeholder.svg?height=600&width=800&text=Cloud+Computing",
+];
+
+const MobileMenu = ({ setIsOpen }) => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="absolute top-full left-0 right-0 bg-gray-900 p-4">
+      <ul className="flex flex-col gap-4 text-sm font-medium text-white">
+        <li><ScrollLink to="about" smooth={true} duration={500} offset={-80} onClick={() => setIsOpen(false)} className="hover:text-yellow-300 transition-colors cursor-pointer block py-2">About</ScrollLink></li>
+        <li><ScrollLink to="services" smooth={true} duration={500} offset={-80} onClick={() => setIsOpen(false)} className="hover:text-yellow-300 transition-colors cursor-pointer block py-2">Services</ScrollLink></li>
+        <li><ScrollLink to="work" smooth={true} duration={500} offset={-80} onClick={() => setIsOpen(false)} className="hover:text-yellow-300 transition-colors cursor-pointer block py-2">Our Work</ScrollLink></li>
+        <li><ScrollLink to="team" smooth={true} duration={500} offset={-80} onClick={() => setIsOpen(false)} className="hover:text-yellow-300 transition-colors cursor-pointer block py-2">Team</ScrollLink></li>
+        <li><ScrollLink to="stack" smooth={true} duration={500} offset={-80} onClick={() => setIsOpen(false)} className="hover:text-yellow-300 transition-colors cursor-pointer block py-2">Tech Stack</ScrollLink></li>
+      </ul>
+    </div>
+  );
+};
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+export default function OlashNetwork() {
+  const scrollRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollRef.current) {
+        const position = (scrollRef.current as HTMLElement).scrollLeft;
+        setScrollPosition(position);
+      }
+    };
+
+    const scrollContainer = scrollRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        prevIndex === carouselImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const smoothScroll = (target: number, duration: number) => {
+    const start = scrollRef.current.scrollLeft;
+    const distance = target - start;
+    let startTime: number | null = null;
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, start, distance, duration);
+      scrollRef.current.scrollLeft = run;
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+      else setIsScrolling(false);
+    };
+
+    const ease = (t: number, b: number, c: number, d: number) => {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    };
+
+    setIsScrolling(true);
+    requestAnimationFrame(animation);
+  };
+
+  const scroll = (direction: string) => {
+    if (scrollRef.current && !isScrolling) {
+      const scrollAmount = direction === 'left' ? -400 : 400;
+      const target = scrollRef.current.scrollLeft + scrollAmount;
+      smoothScroll(target, 500); // 500ms duration for smooth scroll
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-indigo-900 to-pink-900 text-white">
+      {/* Hero Section */}
+      <header className="relative py-20 px-4 overflow-hidden bg-gradient-to-br from-purple-800 via-indigo-700 to-pink-600">
+        <div className="absolute top-0 left-0 right-0 bg-indigo-900/30 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <img 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202024-11-06%20at%2012.49.37%20PM-ubFrYkwNTZHtdgQd9fWkwE3CKbCmP0.jpeg" 
+                alt="Olash Network Logo" 
+                className="w-12 h-12"
+              />
+              <span className="font-bold text-white">Olash Network</span>
+            </div>
+            <nav className="hidden md:block">
+              <ul className="flex gap-6 text-sm font-medium text-white">
+                <li><ScrollLink to="about" smooth={true} duration={500} offset={-80} className="hover:text-yellow-300 transition-colors cursor-pointer">About</ScrollLink></li>
+                <li><ScrollLink to="services" smooth={true} duration={500} offset={-80} className="hover:text-yellow-300 transition-colors cursor-pointer">Services</ScrollLink></li>
+                <li><ScrollLink to="work" smooth={true} duration={500} offset={-80} className="hover:text-yellow-300 transition-colors cursor-pointer">Our Work</ScrollLink></li>
+                <li><ScrollLink to="team" smooth={true} duration={500} offset={-80} className="hover:text-yellow-300 transition-colors cursor-pointer">Team</ScrollLink></li>
+                <li><ScrollLink to="stack" smooth={true} duration={500} offset={-80} className="hover:text-yellow-300 transition-colors cursor-pointer">Tech Stack</ScrollLink></li>
+              </ul>
+            </nav>
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-white focus:outline-none"
+                aria-label="Toggle mobile menu"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+              {isOpen && <MobileMenu setIsOpen={setIsOpen} />}
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-between">
+            <div className="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white mt-16 sm:mt-0">
+                Olash <span className="text-pink-400">Network</span>
+              </h1>
+              <p className="text-lg sm:text-xl lg:text-2xl mb-8 text-gray-100">Empowering Innovation Through Technology</p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <ScrollLink to="about" smooth={true} duration={500} offset={-80}>
+                  <Button size="lg" className="bg-pink-500 text-white hover:bg-pink-600">
+                    About Us
+                  </Button>
+                </ScrollLink>
+              </div>
+            </div>
+            <div className="lg:w-1/2 relative mt-10 lg:mt-0">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-indigo-800 opacity-20 rounded-lg"></div>
+              <div className="relative w-full h-[300px] sm:h-[400px] overflow-hidden rounded-lg shadow-2xl">
+                {carouselImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Tech illustration ${index + 1}`}
+                    className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                      index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  />
+                ))}
+              </div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-pink-500 rounded-full w-32 h-32 flex items-center justify-center z-20">
+                <Cpu className="w-16 h-16 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* About Section */}
+      <Element name="about" className="py-16 px-4 bg-gradient-to-br from-purple-800 via-indigo-800 to-pink-800">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-indigo-400">
+            About Our Tech Company
+          </h2>
+          <div className="text-lg text-gray-300 max-w-3xl mx-auto text-center">
+            <p className="mb-6">
+              Olash Network is a cutting-edge technology company specializing in data analysis,
+              UI/UX design, and full-stack development. We deliver comprehensive solutions
+              that drive digital transformation and business growth.
+            </p>
+            <div className="flex flex-wrap justify-center gap-12 mt-12">
+              <div className="text-center">
+                <Cpu className="w-12 h-12 mx-auto mb-4 text-emerald-400" />
+                <p className="font-semibold text-lg">Advanced Tech</p>
+              </div>
+              <div className="text-center">
+                <Network className="w-12 h-12 mx-auto mb-4 text-teal-400" />
+                <p className="font-semibold text-lg">Scalable Solutions</p>
+              </div>
+              <div className="text-center">
+                <GitBranch className="w-12 h-12 mx-auto mb-4 text-yellow-400" />
+                <p className="font-semibold text-lg">Agile Development</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Element>
+
+      {/* Services Section */}
+      <Element name="services" className="py-16 px-4 bg-gradient-to-tl from-indigo-800 via-purple-800 to-pink-800">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-indigo-400">
+            Our Services
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {services.map((service, index) => (
+              <div key={index} className="bg-gradient-to-br from-purple-900 to-indigo-900 p-8 rounded-xl shadow-lg border border-pink-700 hover:border-pink-500 transition-all duration-300">
+                <div className="text-emerald-400">
+                  {service.icon}
+                </div>
+                <h3 className="text-2xl font-semibold mb-3 text-gray-100">{service.title}</h3>
+                <p className="text-gray-400 mb-4">{service.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {service.technologies.map((tech, i) => (
+                    <span key={i} className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1 rounded-full text-sm">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Element>
+
+      {/* Portfolio Scrolly Section */}
+      <Element name="work" className="py-16 px-4 bg-gradient-to-br from-pink-800 via-indigo-800 to-purple-800 relative">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-indigo-400">
+            Our Work
+          </h2>
+          <div className="relative">
+            <div 
+              ref={scrollRef}
+              className="flex overflow-x-scroll scrollbar-hide snap-x snap-mandatory"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {portfolioItems.map((item, index) => (
+                <div key={index} className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 p-4 snap-start">
+                  <div className="bg-gradient-to-br from-purple-900 to-indigo-900 rounded-xl overflow-hidden shadow-lg">
+                    <img src={item.image} alt={item.title} className="w-full h-48 object-cover" />
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-2 text-emerald-400">{item.title}</h3>
+                      <p className="text-gray-300 mb-4">{item.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {item.technologies.map((tech, i) => (
+                          <span key={i} className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-2 py-1 rounded-full text-xs">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button 
+              onClick={() => scroll('left')} 
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-emerald-500 text-white p-2 rounded-full shadow-lg disabled:opacity-50"
+              aria-label="Scroll left"
+              disabled={scrollPosition === 0 || isScrolling}
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button 
+              onClick={() => scroll('right')} 
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-emerald-500 text-white p-2 rounded-full shadow-lg disabled:opacity-50"
+              aria-label="Scroll right"
+              disabled={scrollPosition >= scrollRef.current?.scrollWidth - scrollRef.current?.clientWidth || isScrolling}
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </Element>
+
+      {/* Team Section */}
+      <Element name="team" className="py-16 px-4 bg-gradient-to-br from-purple-800 via-pink-800 to-indigo-800">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-indigo-400">
+            Our Technical Experts
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {teamMembers.map((member, index) => (
+              <div key={index} className="bg-gradient-to-br from-purple-900 to-indigo-900 p-6 rounded-xl text-center border border-pink-700 hover:border-pink-500 transition-all duration-300">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-emerald-500 shadow-lg"
+                />
+                <h3 className="font-semibold text-xl text-gray-100">{member.name}</h3>
+                <p className="text-emerald-400 font-medium">{member.role}</p>
+                <p className="text-gray-400 text-sm mt-2">{member.expertise}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Element>
+
+      {/* Tech Stack Banner */}
+      <Element name="stack" className="py-16 px-4 bg-gradient-to-tr from-indigo-800 via-purple-800 to-pink-800 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <img 
+            src="/placeholder.svg?height=1080&width=1920" 
+            alt="Tech background" 
+            className="w-full h-full object-cover"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+        <div className="max-w-6xl mx-auto text-center relative z-10">
+          <h2 className="text-3xl font-bold mb-12 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-indigo-400">
+            Our Technology Stack
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="font-semibold mb-4 text-xl text-emerald-400">Data Analysis</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>Python</li>
+                <li>R</li>
+                <li>TensorFlow</li>
+                <li>Pandas</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-4 text-xl text-teal-400">Frontend</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>React</li>
+                <li>TypeScript</li>
+                <li>Next.js</li>
+                <li>Tailwind CSS</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-4 text-xl text-yellow-400">Backend</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>Node.js</li>
+                <li>Python</li>
+                <li>Java</li>
+                <li>PostgreSQL</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-4 text-xl text-green-400">Cloud & DevOps</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li>AWS</li>
+                <li>Docker</li>
+                <li>Kubernetes</li>
+                <li>CI/CD</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </Element>
+
+      {/* Call to Action */}
+      <section className="py-20 px-4 bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-6 text-white">Ready to Transform Your Business?</h2>
+          <p className="text-xl mb-8 text-gray-200">
+            Let's collaborate to bring your innovative ideas to life with our cutting-edge technology solutions.
+          </p>
+          <Button size="lg" className="bg-pink-500 text-white hover:bg-pink-600">
+            Get in Touch <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }
