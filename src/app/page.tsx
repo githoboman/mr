@@ -456,7 +456,7 @@ export default function OlashNetwork() {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-6 text-white">Ready to Transform Your Business?</h2>
             <p className="text-xl mb-8 text-gray-200">
-              Let's collaborate to bring your innovative ideas to life with our cutting-edge technology solutions.
+              Lets collaborate to bring your innovative ideas to life with our cutting-edge technology solutions.
             </p>
             <Button size="lg" className="bg-pink-500 text-white hover:bg-pink-600">
               Get in Touch <ArrowRight className="ml-2 h-5 w-5" />
