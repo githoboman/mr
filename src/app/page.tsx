@@ -139,7 +139,6 @@ const SideNav = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (isOpen: b
     <div className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-purple-800 to-indigo-900 text-white transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} z-50`}>
       <div className="p-4">
         <div className="flex items-center justify-between mb-8">
-          // eslint-disable-next-line @next/next/no-img-element
           <img 
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202024-11-06%20at%2012.49.37%20PM-ubFrYkwNTZHtdgQd9fWkwE3CKbCmP0.jpeg" 
             alt="Olash Network Logo" 
